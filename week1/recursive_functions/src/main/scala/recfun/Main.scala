@@ -22,7 +22,32 @@ object Main {
   /**
    * Exercise 2
    */
-    def balance(chars: List[Char]): Boolean = ???
+    def balance(chars: List[Char]): Boolean = {
+
+      def balanceIter(xs: List[Char], bracesCount: Int): Boolean = {
+        if (xs isEmpty) {
+          return bracesCount == 0
+        }
+        else {
+          if (bracesCount < 0) {
+            return false
+          }
+
+          val head: Char = xs.head
+          if (head == '(') {
+            balanceIter(xs.tail, bracesCount + 1)
+          }
+          else if (head == ')') {
+            balanceIter(xs.tail, bracesCount - 1)
+          }
+          else {
+            balanceIter(xs.tail, bracesCount)
+          }
+        }
+      }
+
+      balanceIter(chars, 0)
+    }
   
   /**
    * Exercise 3
