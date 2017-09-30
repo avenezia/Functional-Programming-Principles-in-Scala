@@ -24,26 +24,25 @@ object Main {
    */
     def balance(chars: List[Char]): Boolean = {
 
-      def balanceIter(xs: List[Char], bracesCount: Int): Boolean = {
+      def balanceIter(xs: List[Char], parenthesesCount: Int): Boolean = {
         if (xs isEmpty) {
-          return bracesCount == 0
+          return parenthesesCount == 0
         }
         else {
-          if (bracesCount < 0) {
+          if (parenthesesCount < 0)
             return false
-          }
-
-          val head: Char = xs.head
-          if (head == '(') {
-            balanceIter(xs.tail, bracesCount + 1)
-          }
-          else if (head == ')') {
-            balanceIter(xs.tail, bracesCount - 1)
-          }
-          else {
-            balanceIter(xs.tail, bracesCount)
-          }
+          else
+            balanceIter(xs.tail, handleParenthesesCount(xs.head, parenthesesCount))
         }
+      }
+
+      def handleParenthesesCount(currentChar: Char, count: Int): Int = {
+        if (currentChar == '(')
+          return count + 1
+        else if (currentChar == ')')
+          return count - 1
+        else
+          return count
       }
 
       balanceIter(chars, 0)
@@ -52,5 +51,12 @@ object Main {
   /**
    * Exercise 3
    */
-    def countChange(money: Int, coins: List[Int]): Int = ???
-  }
+    def countChange(money: Int, coins: List[Int]): Int = {
+      if (money == 0)
+        return 1
+      else if (money > 0 && !coins.isEmpty)
+        return countChange(money - coins.head, coins) + countChange(money, coins.tail)
+      else
+        return 0
+      }
+}
