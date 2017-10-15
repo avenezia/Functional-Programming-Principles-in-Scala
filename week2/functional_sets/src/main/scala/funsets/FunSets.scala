@@ -77,13 +77,16 @@ object FunSets {
    * that satisfies `p`.
    */
     def exists(s: Set, p: Int => Boolean): Boolean = {
-      
+      return !forall(s, elem => !p(elem))
     }
   
   /**
    * Returns a set transformed by applying `f` to each element of `s`.
    */
-    def map(s: Set, f: Int => Int): Set = ???
+    def map(s: Set, f: Int => Int): Set = {
+      val xs = for (i <- -bound to bound if contains(s, i)) yield singletonSet(f(i))
+      return xs reduce(union)
+    }
   
   /**
    * Displays the contents of a set

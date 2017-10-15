@@ -155,4 +155,28 @@ class FunSetSuite extends FunSuite {
       assert(!forall(notAllEven, (x: Int) => x % 2 == 0))
     }
   }
+
+  test("exists odd on all even") {
+    new TestSets {
+      val allEven = union(union(s2, s4), s6)
+      assert(!exists(allEven, (x: Int) => x % 2 == 1))
+    }
+  }
+
+  test("exists odd") {
+    new TestSets {
+      val evenAndOdd = union(union(s2, s4), s3)
+      assert(exists(evenAndOdd , (x: Int) => x % 2 == 1))
+    }
+  }
+
+  test("map") {
+    new TestSets {
+      val allEven = union(union(s2, s4), s6)
+      val allEvenTimesTwo: Set = map(allEven, (x: Int) => x * 2)
+      assert(contains(allEvenTimesTwo, 4))
+      assert(contains(allEvenTimesTwo, 8))
+      assert(contains(allEvenTimesTwo, 12))
+    }
+  }
 }
